@@ -21,5 +21,5 @@ if __name__ == '__main__':
                  input('Enter the terms of list'
                        ' separated by spaces: ').split())
              )
-    x = int(input('Enter the numb which we search: '))
+    x = int(input('Enter the numb which we are searching: '))
     print(search(a, x))
