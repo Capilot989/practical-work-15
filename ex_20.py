@@ -1,25 +1,47 @@
 def comp(a: str, b: str, m: int, n: int) -> int:
     """
-    Finds the length of the longest common contiguous subsequence
-    between two strings using a recursive approach.
+        Finds the length of the longest common contiguous substring between two strings.
 
-    Args:
-        a (str): First string
-        b (str): Second string
-        m (int): Current position in first string (initially length of a)
-        n (int): Current position in second string (initially length of b)
+        Uses a recursive approach to find the maximum length of a contiguous sequence
+        of characters that appears in both strings in the same order.
 
-    Returns:
-        int: Length of the longest common contiguous subsequence
-    """
+        Args:
+            a (str): First input string
+            b (str): Second input string
+            m (int): Length of the first string (current position in recursion)
+            n (int): Length of the second string (current position in recursion)
+
+        Returns:
+            int: Length of the longest common contiguous substring
+        """
+    def count_match(ind_a: int, ind_b: int) -> int:
+        """
+               Recursively counts the length of matching contiguous substring 
+               starting from the current positions.
+
+               Args:
+                   ind_a (int): Current position in string a
+                   ind_b (int): Current position in string b
+
+               Returns:
+                   int: Length of contiguous matching substring ending at current positions
+               """
+        if ind_a == 0 or ind_b == 0:
+            return 0
+        if a[ind_a-1] == b[ind_b-1]:
+            return 1 + count_match(ind_a-1, ind_b-1)
+        else:
+            return 0
+
     if m == 0 or n == 0:
         return 0
-    if a == b:
-        return m
-    if a[m-1] == b[n-1]:
-        return 1 + comp(a, b, m-1, n-1)
+
+    match_here = count_match(m, n)
+
     return max(
-        comp(a, b, m, n-1), comp(a, b, m-1, n)
+        match_here,
+        comp(a, b, m-1, n),
+        comp(a, b, m, n-1)
     )
 
 
